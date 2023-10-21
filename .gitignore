@@ -1,2 +1,4 @@
 # Ignorar ambiente virtual de Python
 venv/
+#Ignorar pycache generado localmente
+__pycache__/
