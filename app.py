@@ -1,6 +1,7 @@
 #importaciones
 from flask import Flask, render_template, request
 import config
+import pymysql
 #app archivo principal de la aplicación
 #instancia de Flask
 
@@ -13,7 +14,14 @@ app.config['MYSQL_USER'] = config.MYSQL_USER
 app.config['MYSQL_PASSWORD'] = config.MYSQL_PASSWORD
 app.config['MYSQL_DB'] = config.MYSQL_DB
 
-
+#función para conectarnos a la base de datos
+def conectar_db():
+    return pymysql.connect(
+        host=app.config['MYSQL_HOST'],
+        user=app.config['MYSQL_USER'],
+        password=app.config['MYSQL_PASSWORD'],
+        db=app.config['MYSQL_DB']
+    )
 
 #ruta principal y metodo
 @app.route('/', methods=['GET'])
