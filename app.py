@@ -34,25 +34,26 @@ def home():
 #Ruta para realizar el proceso de login
 @app.route('/login', methods=['POST'])
 def login():
-    #recibir email y password
+    # Recibir email y password
     email = request.form['email']
     password = request.form['password']
 
-    #Conectar a la DB
+    # Conectar a la DB
     db = conectar_db()
     cursor = db.cursor()
-    cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s", (email,password))
+    cursor.execute("SELECT * FROM users WHERE email = %s", (email))
     user = cursor.fetchone()
     db.close()
-
+    
     if user is not None:
-        session['email'] = email
-        session['name'] = user[1]
-        session['surnames'] = user[2]
-
-        return redirect(url_for('tasks'))
-    else:
-        return render_template('index.html', message="Las credenciales no son correctas")
+        stored_password = user[4]  
+        if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
+            session['email'] = email
+            session['name'] = user[1]
+            session['surnames'] = user[2]
+            return redirect(url_for('tasks'))
+    
+    return render_template('index.html', message="Las credenciales no son correctas")
 
 @app.route('/registroAction', methods=['POST'])
 def registro_post():
