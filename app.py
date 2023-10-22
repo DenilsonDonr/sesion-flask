@@ -75,6 +75,9 @@ def registro_post():
     # Verificar si el nombre contiene números
     if any(char.isdigit() for char in nombre):
         errores.append("El campo 'Nombre' no debe contener números")
+    #Verificar si el apellido contiene números
+    if any(char.isdigit() for char in apellido):
+        errores.append("El campo 'Apellido' no debe contener números")
     # Verificar el email
     if not validate_email(email):
         errores.append("El email no es válido")
