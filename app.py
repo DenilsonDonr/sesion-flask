@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from validate_email_address import validate_email
 import config
 import pymysql
+import bcrypt
 #app archivo principal de la aplicación
 #instancia de Flask
 
@@ -95,10 +96,16 @@ def registro_post():
     if errores:
         return render_template('registro.html', message=errores_str)
     
+    #Uso de bcrypt para las contraseñas y guardarlas incriptadas
+    pwd = password.encode('utf-8')
+    #generacion de la "sal"
+    sal = bcrypt.gensalt()
+    #Incriptamos la contraseña
+    encript = bcrypt.hashpw(pwd, sal)
     try:
         # Ejecutar una sentencia insertando los datos
         cursor.execute("INSERT INTO users (name, surnames, email, password) VALUES (%s, %s, %s, %s)",
-                       (nombre, apellido, email, password))
+                       (nombre, apellido, email, encript))
         # Commit para confirmar que el envío de datos se realice y se guarde permanentemente
         db.commit()
         db.close()
