@@ -51,5 +51,15 @@ def login():
         return redirect(url_for('tasks'))
     else:
         return render_template('index.html', message="Las credenciales no son correctas")
+
+@app.route('/registro', methods=['GET'])
+def registro():
+    return render_template('registro.html')
+
+#Ruta de taks
+@app.route('/tasks', methods=['GET'])
+def tasks():
+      return render_template('tasks.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
