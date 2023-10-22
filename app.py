@@ -1,5 +1,6 @@
 #importaciones
 from flask import Flask, render_template, request, session, redirect, url_for
+from validate_email_address import validate_email
 import config
 import pymysql
 #app archivo principal de la aplicación
@@ -51,6 +52,53 @@ def login():
         return redirect(url_for('tasks'))
     else:
         return render_template('index.html', message="Las credenciales no son correctas")
+
+@app.route('/registroAction', methods=['POST'])
+def registro_post():
+    # Recibir nombre, apellido, email y password
+    nombre = request.form['nombre']
+    apellido = request.form['apellido']
+    email = request.form['email']
+    password = request.form['password']
+
+    # Iniciar mensajes de errores
+    errores = []
+
+    # Verificar campos obligatorios
+    if not nombre or not apellido or not email or not password:
+        errores.append("Todos los campos son obligatorios")
+
+    # Verificar si el nombre contiene números
+    if any(char.isdigit() for char in nombre):
+        errores.append("El campo 'Nombre' no debe contener números")
+    # Verificar el email
+    if not validate_email(email):
+        errores.append("El email no es válido")
+
+    # Unir los elementos de la lista de errores en una sola cadena
+    errores_str = ", ".join(errores)
+
+    if errores:
+        return render_template('registro.html', message=errores_str)
+    
+    # Conectar a la DB
+    db = conectar_db()
+    cursor = db.cursor()
+
+    try:
+        # Ejecutar una sentencia insertando los datos
+        cursor.execute("INSERT INTO users (name, surnames, email, password) VALUES (%s, %s, %s, %s)",
+                       (nombre, apellido, email, password))
+        # Commit para confirmar que el envío de datos se realice y se guarde permanentemente
+        db.commit()
+        db.close()
+        return render_template('index.html', razon=f"Se registró correctamente al usuario {nombre}")
+    except Exception as e:
+        # En caso de error, se realizará un rollback
+        db.rollback()
+        db.close()
+        return render_template('registro.html', message=e)
+
 
 @app.route('/registro', methods=['GET'])
 def registro():
