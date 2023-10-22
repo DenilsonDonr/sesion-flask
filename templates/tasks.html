@@ -22,7 +22,30 @@
                 <img src="{{url_for('static', filename='images/user-plus-solid.svg')}}" width="25" class="mx-auto d-block" data-bs-toggle="modal" data-bs-target="#user-modal">
             </div>
         </div>
+        <!-- Tasks -->
+        <div class="row row-col-1 row-cols-sm-1 row-cols-md-3 row-cols-lg-4 mt-3">
+            {% for task in tasks %}
 
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            {{task.title}}
+                        </div>
+                        <div class="card-body">
+                            {{task.description}}
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            {{task.date_task}}
+                            <form action="/delete-task" method="POST">
+                                <input type="hidden" value="{{task.id}}" name="id">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Eliminar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
 
     <!-- Task Modal -->
     <div class="modal fade" id="task-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
