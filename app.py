@@ -44,7 +44,7 @@ def login():
     cursor.execute("SELECT * FROM users WHERE email = %s", (email))
     user = cursor.fetchone()
     db.close()
-    
+
     if user is not None:
         stored_password = user[4]  
         if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
@@ -117,6 +117,11 @@ def registro_post():
         db.close()
         return render_template('registro.html', message=e)
 
+#Ruta de logout
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('home'))
 
 @app.route('/registro', methods=['GET'])
 def registro():
