@@ -1,6 +1,7 @@
 #importaciones
 from flask import Flask, render_template, request, session, redirect, url_for
 from validate_email_address import validate_email
+from datetime import datetime
 import config
 import pymysql
 import bcrypt
@@ -117,6 +118,32 @@ def registro_post():
         db.close()
         return render_template('registro.html', message=e)
 
+#Ruta de creación de tarea
+@app.route('/nueva-task', methods=['POST'])
+def nuevaTarea():
+    #Tomar los valores del formulario para una nueva tarea, también el email
+    title = request.form['title']
+    descripcion = request.form['description']
+    email = session['email']
+    #Creamos una variable para verificar la hora en que se agregó la tarea
+    d = datetime.now()
+    dateTasks = d.strftime("%Y-%m-%d $H:%M:%S")
+
+    #verificamos si hay datos 
+    if title and descripcion and email:
+        #Conetamos a la DB
+        db = conectar_db()
+        cursor = db.cursor()
+        try:
+            cursor.execute("INSERT INTO tasks (email, title, description, date_task) VALUES(%s, %s, %s, %s)",
+                           (email, title, descripcion, dateTasks))
+            db.commit()
+            db.close()
+            return redirect(url_for('tasks'))
+        except Exception as e:
+            db.rollback()
+            db.close()
+            return redirect(url_for('tasks'))
 #Ruta de logout
 @app.route('/logout')
 def logout():
