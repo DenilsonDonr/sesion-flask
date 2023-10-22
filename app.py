@@ -157,7 +157,24 @@ def registro():
 #Ruta de taks
 @app.route('/tasks', methods=['GET'])
 def tasks():
-      return render_template('tasks.html')
+    #obtemos los datos , para recargar la pagina y mostrar las tareas agregar por el usuario
+    email = session['email']
+    
+    #Conexion a DB
+    db = conectar_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM tasks WHERE email = %s", (email))
+    #Recibimos todas las task en la varaiable tasks
+    tasks = cursor.fetchall()
+    #creamos un diccionario
+    objeto = []
+    columnaNames = [column[0] for column in cursor.description]
+
+    for record in tasks:
+        objeto.append(dict(zip(columnaNames, record)))
+    cursor.close()
+
+    return render_template('tasks.html', tasks = objeto)
 
 if __name__ == '__main__':
     app.run(debug=True)
