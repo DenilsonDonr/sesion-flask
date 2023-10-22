@@ -14,5 +14,35 @@
             <span>Bienvenido/a {{session['name']}} {{session['surnames']}}<a href="{{url_for('logout')}}" class="mx-3">Salir</a></span>
         </div>
     </nav>
+
+    <div class="container">
+        <div class="card mt-3 w-25 mx-auto d-block">
+            <div class="card-body d-flex">
+                <img src="{{url_for('static', filename='images/plus-circle-solid.svg')}}" width="25" class="mx-auto d-block" data-bs-toggle="modal" data-bs-target="#task-modal">
+                <img src="{{url_for('static', filename='images/user-plus-solid.svg')}}" width="25" class="mx-auto d-block" data-bs-toggle="modal" data-bs-target="#user-modal">
+            </div>
+        </div>
+
+
+    <!-- Task Modal -->
+    <div class="modal fade" id="task-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva tarea</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+             <form action="/nueva-task" method="post">
+                <label>Título</label>
+                <input type="text" class="form-control mb-3" name="title">
+                <label>Descripción</label>
+                <textarea class="form-control mb-3" rows="5" name="description"></textarea>
+                <button type="submit" class="btn btn-primary w-100">Guardar</button>
+             </form>
+            </div>
+        </div>
+        </div>
+    </div>
 </body>
 </html>
