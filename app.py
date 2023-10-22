@@ -61,6 +61,10 @@ def registro_post():
     email = request.form['email']
     password = request.form['password']
 
+    # Conectar a la DB
+    db = conectar_db()
+    cursor = db.cursor()
+
     # Iniciar mensajes de errores
     errores = []
 
@@ -74,17 +78,20 @@ def registro_post():
     # Verificar el email
     if not validate_email(email):
         errores.append("El email no es válido")
-
+    
+    try:
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email))
+        email_cursor = cursor.fetchone()
+        if email_cursor is not None:
+            errores.append("El email ya está en uso")
+    except Exception as e:
+        return render_template('registro.html', message="Error al registrar el email")
     # Unir los elementos de la lista de errores en una sola cadena
     errores_str = ", ".join(errores)
 
     if errores:
         return render_template('registro.html', message=errores_str)
     
-    # Conectar a la DB
-    db = conectar_db()
-    cursor = db.cursor()
-
     try:
         # Ejecutar una sentencia insertando los datos
         cursor.execute("INSERT INTO users (name, surnames, email, password) VALUES (%s, %s, %s, %s)",
