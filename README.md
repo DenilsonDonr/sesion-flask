@@ -6,11 +6,12 @@ Bienvenido a mi proyecto con flask, es un crud sencillo con flask en el cual ten
 
 -Imagen de login
 
-![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/06eb98b5-376c-4244-97cf-e02d7b670d57)
+![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/53382413-d9aa-44e5-9bfb-3f0887802f09)
+
 
 -Imagen de Register
 
-![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/c46b68b1-0cd7-41ae-953d-27d9e87c85d4)
+![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/856eb151-3cff-4b55-8a46-f7a726effcc6)
 
 
 Para inicializar este proyecto, yo creé un ambiente virtual.
@@ -19,19 +20,19 @@ Tienen que instalar estos paquetes:
 
 -flask
 
-![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/97357c95-d308-40ac-bcb9-b724cf16025a)
+![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/84f24d6d-9d93-477c-927e-b8fe2adb99b4)
 
 -PyMQSQL
 
-![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/c9c84cf6-67f4-4194-9fd0-b7cbf7d7537f)
+![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/48b95aa3-e56b-4c88-8c17-a54a07760d8b)
 
 -validate-email-address
 
-![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/86291cdd-0afc-4955-8f5f-01c87f7ff931)
+![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/f6afec47-943c-43b3-aedc-301382a5d2e7)
 
 -bcrypt
 
-![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/89db6917-495c-4475-be95-f0aa6fba885b)
+![image](https://github.com/DenilsonDonr/sesion-flask/assets/141369726/a1d8de91-a3af-4b61-b78b-810be5976b39)
 
 
 Con todo esto, la aplicación les debería correr sin problemas, también no se olviden de configurar las conexión a la base de dato.
