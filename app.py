@@ -144,6 +144,26 @@ def nuevaTarea():
             db.rollback()
             db.close()
             return redirect(url_for('tasks'))
+@app.route('/eliminar-task', methods=['POST'])
+def eliminarTask():
+    #tomamos el ID
+    id = request.form['id']
+
+    #Llamamos a la conexión de la DB
+    db = conectar_db()
+    #preparamos la sentencia 
+    cursor = db.cursor()
+    
+    try:
+        cursor.execute("DELETE FROM tasks WHERE id = %s",(id))
+        db.commit()
+        db.close()
+        return redirect(url_for('tasks'))
+    except Exception as e:
+        db.rollback()
+        db.close()
+        return redirect(url_for('tasks'))
+
 #Ruta de logout
 @app.route('/logout')
 def logout():
