@@ -36,7 +36,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between">
                             {{task.date_task}}
-                            <form action="/delete-task" method="POST">
+                            <form action="/eliminar-task" method="POST">
                                 <input type="hidden" value="{{task.id}}" name="id">
                                 <button type="submit" class="btn btn-outline-danger btn-sm">Eliminar</button>
                             </form>
